@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input {
+            margin: 5px 0;
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Contact Manager</h1>
+
+    <form id="contact-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="cell">Cell Phone:</label>
+        <input type="tel" id="cell" required>
+
+        <label for="extension">Work Extension:</label>
+        <input type="text" id="extension" required>
+
+        <button type="submit">Add Contact</button>
+    </form>
+
+    <h2>Contacts List</h2>
+    <table id="contacts-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Cell Phone</th>
+                <th>Work Extension</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Contacts will be displayed here -->
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Gather input values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const cell = document.getElementById('cell').value;
+            const extension = document.getElementById('extension').value;
+
+            // Create a new row
+            const table = document.getElementById('contacts-table').querySelector('tbody');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${email}</td>
+                <td>${cell}</td>
+                <td>${extension}</td>
+            `;
+
+            // Add the row to the table
+            table.appendChild(row);
+
+            // Clear form inputs
+            document.getElementById('contact-form').reset();
+        });
+    </script>
+</body>
+</html>
