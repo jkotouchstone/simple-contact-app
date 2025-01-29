@@ -57,6 +57,16 @@
             background-color: #0056b3;
         }
 
+        #searchBar {
+            width: 100%;
+            padding: 10px;
+            margin: 20px auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            max-width: 600px;
+        }
+
         table {
             width: 100%;
             margin: 20px auto;
@@ -73,27 +83,14 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #3765ad;
             color: white;
-        }
-
-        #searchBar {
-            width: 100%;
-            padding: 10px;
-            margin: 20px auto;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-            max-width: 600px;
         }
     </style>
 </head>
 <body>
 
     <h1>Touchstone Phone List</h1>
-
-    <!-- Search Bar -->
-    <input type="text" id="searchBar" placeholder="Search contacts by any field...">
 
     <form id="contactForm">
         <label for="name">Name:</label>
@@ -110,6 +107,9 @@
 
         <button type="submit">Add Contact</button>
     </form>
+
+    <!-- Search Bar moved below the form -->
+    <input type="text" id="searchBar" placeholder="Search contacts by any field...">
 
     <table id="contactTable">
         <thead>
