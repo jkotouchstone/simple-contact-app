@@ -141,7 +141,7 @@
         // Your Google Apps Script Web App URL
         const webAppUrl = "https://script.google.com/macros/s/AKfycbw85aOCsSkB0991bDuHqrb0kon9EBDOzBhnbve9nCId3sQaO8nynLPTykvK3tK3rYVZ/exec";
 
-        // Handle form submission
+        // Function to handle form submission
         contactForm.addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -153,41 +153,59 @@
                 workExtension: document.getElementById('workExtension').value
             };
 
-            // Save contact to Google Sheets
-            await fetch(webAppUrl, {
-                method: 'POST',
-                body: JSON.stringify(contact),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+            try {
+                // Send data to Google Apps Script
+                const response = await fetch(webAppUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(contact),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
 
-            // Refresh the table after saving
-            loadContacts();
+                if (response.ok) {
+                    // Successfully saved, refresh the contact list
+                    loadContacts();
+                } else {
+                    alert('Error saving contact. Please try again.');
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while saving the contact.');
+            }
 
             // Clear the form
             contactForm.reset();
         });
 
-        // Load contacts from Google Sheets
+        // Function to load contacts from Google Sheets
         async function loadContacts() {
-            const response = await fetch(webAppUrl);
-            const contacts = await response.json();
+            try {
+                const response = await fetch(webAppUrl);
+                const contacts = await response.json();
 
-            tableBody.innerHTML = '';  // Clear existing rows
-            contacts.forEach(contact => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${contact.name}</td>
-                    <td>${contact.email}</td>
-                    <td>${contact.cellPhone}</td>
-                    <td>${contact.workExtension}</td>
-                `;
-                tableBody.appendChild(row);
-            });
+                // Clear existing rows in the table
+                tableBody.innerHTML = '';
+
+                // Populate the table with retrieved contacts
+                contacts.forEach(contact => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${contact.name}</td>
+                        <td>${contact.email}</td>
+                        <td>${contact.cellPhone}</td>
+                        <td>${contact.workExtension}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Error loading contacts:', error);
+                alert('An error occurred while loading the contact list.');
+            }
         }
 
-        // Handle search input
+        // Function to handle search input
         searchBar.addEventListener('input', function() {
             const searchTerm = searchBar.value.toLowerCase();
             const rows = tableBody.querySelectorAll('tr');
@@ -202,7 +220,7 @@
             });
         });
 
-        // Load contacts on page load
+        // Load contacts when the page loads
         loadContacts();
     </script>
 
