@@ -10,6 +10,7 @@
             margin: 20px;
             padding: 0;
             background-color: #f4f4f4;
+            display: none;  /* Hide content until password is verified */
         }
 
         h1 {
@@ -124,6 +125,15 @@
     </table>
 
     <script>
+        // Password protection
+        const password = prompt("Enter the password to access the Touchstone Phone List:");
+        if (password === "Touchstone") {
+            document.body.style.display = "block";  // Show the page content if the password is correct
+        } else {
+            alert("Incorrect password. You are not authorized to access this site.");
+            window.location.href = "https://www.google.com";  // Redirect if the password is incorrect
+        }
+
         const contactForm = document.getElementById('contactForm');
         const tableBody = document.getElementById('tableBody');
         const searchBar = document.getElementById('searchBar');
